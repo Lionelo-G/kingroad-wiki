@@ -1,0 +1,223 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --gold: #c9a84c;
+  --dark: #1a1a2e;
+  --darker: #0f0f1a;
+  --card-bg: #16213e;
+  --text: #e0e0e0;
+  --text-muted: #888;
+  --assassin: #8b1a1a;
+  --chevalier: #1a4a8b;
+  --mercenaire: #2d5a1a;
+}
+
+body {
+  background: var(--dark);
+  color: var(--text);
+  font-family: 'Segoe UI', sans-serif;
+  min-height: 100vh;
+}
+
+header {
+  background: var(--darker);
+  border-bottom: 2px solid var(--gold);
+  padding: 16px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+header h1 {
+  color: var(--gold);
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+
+nav {
+  display: flex;
+  gap: 8px;
+}
+
+.nav-btn {
+  background: transparent;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  padding: 8px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.nav-btn.active,
+.nav-btn:hover {
+  background: var(--gold);
+  color: var(--darker);
+  font-weight: 600;
+}
+
+main {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.page { display: none; }
+.page.active { display: block; }
+
+h2 {
+  color: var(--gold);
+  font-size: 18px;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--gold);
+}
+
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  background: transparent;
+  border: 1px solid var(--text-muted);
+  color: var(--text-muted);
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s;
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.filter-btn[data-class="assassin"].active { border-color: var(--assassin); color: var(--assassin); }
+.filter-btn[data-class="chevalier"].active { border-color: var(--chevalier); color: #4a9eff; }
+.filter-btn[data-class="mercenaire"].active { border-color: var(--mercenaire); color: #6abf4b; }
+
+.build-card {
+  background: var(--card-bg);
+  border: 1px solid #2a2a4a;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 12px;
+  transition: border-color 0.2s;
+}
+
+.build-card:hover { border-color: var(--gold); }
+
+.build-card .class-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.badge-assassin { background: var(--assassin); color: #ffaaaa; }
+.badge-chevalier { background: var(--chevalier); color: #aaccff; }
+.badge-mercenaire { background: var(--mercenaire); color: #aaffaa; }
+
+.build-card h3 { font-size: 16px; margin-bottom: 6px; }
+.build-card p  { font-size: 13px; color: var(--text-muted); }
+
+.build-stats {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.stat-chip {
+  background: #0f0f1a;
+  border: 1px solid #2a2a4a;
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 12px;
+  color: var(--gold);
+}
+
+#btn-new-build {
+  width: 100%;
+  margin-top: 20px;
+  padding: 14px;
+  background: transparent;
+  border: 2px dashed var(--gold);
+  color: var(--gold);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: all 0.2s;
+}
+
+#btn-new-build:hover {
+  background: var(--gold);
+  color: var(--darker);
+  font-weight: 600;
+}
+
+.calculator-form {
+  background: var(--card-bg);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.form-group select,
+.form-group input[type="number"] {
+  width: 100%;
+  background: var(--darker);
+  border: 1px solid #2a2a4a;
+  color: var(--text);
+  padding: 10px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.form-group select:focus,
+.form-group input:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+
+.stats-result {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.stat-row {
+  background: var(--darker);
+  border-radius: 6px;
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stat-row .stat-name { font-size: 13px; color: var(--text-muted); }
+.stat-row .stat-value { font-size: 15px; color: var(--gold); font-weight: 600; }
