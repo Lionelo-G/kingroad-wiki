@@ -1,4 +1,11 @@
-// Navigation entre les pages
+const SUPABASE_URL = 'https://tffbirgikaqvkmzhvzdk.supabase.co';
+const SUPABASE_KEY = process.env.SUPABASE_KEY;
+
+// Client Supabase
+const { createClient } = supabase;
+const db = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// Navigation
 const navBtns = document.querySelectorAll('.nav-btn');
 const pages = document.querySelectorAll('.page');
 
@@ -11,85 +18,63 @@ navBtns.forEach(btn => {
   });
 });
 
-// Données des builds
-let builds = JSON.parse(localStorage.getItem('kingsroad-builds')) || [
-  {
-    id: 1,
-    nom: "Assassin Critique",
-    classe: "assassin",
-    style: "PvE",
-    description: "Maximise les dégâts critiques pour one-shot les ennemis.",
-    traits: ["Lame acérée", "Frappe fatale", "Ombre furtive"],
-    lien: "https://got-kingsroad.com"
-  },
-  {
-    id: 2,
-    nom: "Chevalier Tank",
-    classe: "chevalier",
-    style: "Boss",
-    description: "Build défensif pour survivre aux boss les plus difficiles.",
-    traits: ["Bouclier de fer", "Endurance", "Contre-attaque"],
-    lien: "https://got-kingsroad.com"
-  },
-  {
-    id: 3,
-    nom: "Mercenaire Berserker",
-    classe: "mercenaire",
-    style: "PvE",
-    description: "Dégâts bruts maximisés avec la grande hache.",
-    traits: ["Furie", "Frappe lourde", "Berserker"],
-    lien: "https://got-kingsroad.com"
-  }
-];
-
-// Afficher les builds
-function renderBuilds(filtre = 'all') {
+// Charger les builds depuis Supabase
+async function chargerBuilds(filtre = 'all') {
   const container = document.getElementById('builds-list');
-  const filtered = filtre === 'all' ? builds : builds.filter(b => b.classe === filtre);
+  container.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:40px;font-style:italic">Chargement...</p>';
 
-  if (filtered.length === 0) {
-    container.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:40px">Aucun build pour cette classe.</p>';
+  let query = db.from('builds').select('*').order('created_at', { ascending: false });
+  if (filtre !== 'all') query = query.eq('classe', filtre);
+
+  const { data, error } = await query;
+
+  if (error) {
+    container.innerHTML = '<p style="color:#cc4444;text-align:center;padding:40px">Erreur de chargement.</p>';
     return;
   }
 
-  container.innerHTML = filtered.map(build => `
-    <div class="build-card">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-        <span class="class-badge badge-${build.classe}">${build.classe}</span>
-        <span class="style-badge">${build.style}</span>
+  if (!data || data.length === 0) {
+    container.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:40px;font-style:italic">Aucun build pour cette classe.</p>';
+    return;
+  }
+
+  container.innerHTML = data.map(build => {
+    const traits = build.traits ? build.traits.split(',').map(t => t.trim()) : [];
+    return `
+      <div class="build-card">
+        <div class="build-card-top">
+          <span class="class-badge badge-${build.classe}">${build.classe}</span>
+          <span class="style-badge">${build.style || ''}</span>
+        </div>
+        <h3>${build.nom}</h3>
+        <p>${build.description || ''}</p>
+        <div class="build-traits">
+          ${traits.map(t => `<span class="trait-chip">${t}</span>`).join('')}
+        </div>
+        ${build.lien ? `<a href="${build.lien}" target="_blank" class="gear-link">Voir le gear sur got-kingsroad.com →</a>` : ''}
       </div>
-      <h3>${build.nom}</h3>
-      <p>${build.description}</p>
-      <div class="build-traits">
-        ${build.traits.map(t => `<span class="trait-chip">${t}</span>`).join('')}
-      </div>
-      ${build.lien ? `
-        <a href="${build.lien}" target="_blank" class="gear-link">
-          Voir le gear sur got-kingsroad.com →
-        </a>
-      ` : ''}
-    </div>
-  `).join('');
+    `;
+  }).join('');
 }
 
-// Filtres par classe
+// Filtres
 const filterBtns = document.querySelectorAll('#page-builds .filter-btn');
 filterBtns.forEach(btn => {
   btn.addEventListener('click', () => {
     filterBtns.forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    renderBuilds(btn.dataset.class);
+    chargerBuilds(btn.dataset.class);
   });
 });
 
-// Bouton créer un build
+// Bouton nouveau build
 document.getElementById('btn-new-build').addEventListener('click', afficherFormulaireNouveauBuild);
 
 function afficherFormulaireNouveauBuild() {
   const container = document.getElementById('builds-list');
   container.innerHTML = `
     <div class="build-card">
-      <h3 style="color:var(--gold);margin-bottom:16px">Nouveau build</h3>
+      <h3 style="font-family:'Cinzel',serif;color:var(--gold);margin-bottom:16px;letter-spacing:1px">Forger un build</h3>
       <div class="form-group">
         <label>Nom du build</label>
         <input type="text" id="new-nom" placeholder="Ex: Assassin PvP Burst">
@@ -124,27 +109,34 @@ function afficherFormulaireNouveauBuild() {
         <input type="text" id="new-lien" placeholder="https://got-kingsroad.com/...">
       </div>
       <div style="display:flex;gap:8px;margin-top:8px">
-        <button onclick="sauvegarderBuild()" class="btn-primary">Sauvegarder</button>
-        <button onclick="renderBuilds()" class="btn-secondary">Annuler</button>
+        <button onclick="sauvegarderBuild()" class="btn-primary">Forger</button>
+        <button onclick="chargerBuilds()" class="btn-secondary">Annuler</button>
       </div>
     </div>
   `;
 }
 
-function sauvegarderBuild() {
+async function sauvegarderBuild() {
   const nom = document.getElementById('new-nom').value.trim();
   const classe = document.getElementById('new-classe').value;
   const style = document.getElementById('new-style').value;
-  const desc = document.getElementById('new-desc').value.trim();
-  const traits = document.getElementById('new-traits').value.split(',').map(t => t.trim()).filter(t => t);
+  const description = document.getElementById('new-desc').value.trim();
+  const traits = document.getElementById('new-traits').value.trim();
   const lien = document.getElementById('new-lien').value.trim();
 
   if (!nom) { alert('Donne un nom à ton build !'); return; }
 
-  builds.push({ id: Date.now(), nom, classe, style, description: desc || 'Pas de description.', traits, lien });
-  localStorage.setItem('kingsroad-builds', JSON.stringify(builds));
-  renderBuilds();
+  const { error } = await db.from('builds').insert([{
+    nom, classe, style, description, traits, lien
+  }]);
+
+  if (error) {
+    alert('Erreur lors de la sauvegarde. Réessaie.');
+    return;
+  }
+
+  chargerBuilds();
 }
 
 // Initialisation
-renderBuilds();
+chargerBuilds();
