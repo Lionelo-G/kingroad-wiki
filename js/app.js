@@ -11,28 +11,34 @@ navBtns.forEach(btn => {
   });
 });
 
-// Données des builds (on commence avec quelques exemples)
+// Données des builds
 let builds = JSON.parse(localStorage.getItem('kingsroad-builds')) || [
   {
     id: 1,
     nom: "Assassin Critique",
     classe: "assassin",
+    style: "PvE",
     description: "Maximise les dégâts critiques pour one-shot les ennemis.",
-    stats: { "Crit Rate": "45%", "Crit DMG": "180%", "ATK": "1250" }
+    traits: ["Lame acérée", "Frappe fatale", "Ombre furtive"],
+    lien: "https://got-kingsroad.com"
   },
   {
     id: 2,
     nom: "Chevalier Tank",
     classe: "chevalier",
+    style: "Boss",
     description: "Build défensif pour survivre aux boss les plus difficiles.",
-    stats: { "HP": "25000", "DEF": "850", "Parry": "30%" }
+    traits: ["Bouclier de fer", "Endurance", "Contre-attaque"],
+    lien: "https://got-kingsroad.com"
   },
   {
     id: 3,
     nom: "Mercenaire Berserker",
     classe: "mercenaire",
+    style: "PvE",
     description: "Dégâts bruts maximisés avec la grande hache.",
-    stats: { "ATK": "1800", "Rage Gain": "+25%", "Mighty Strike": "220%" }
+    traits: ["Furie", "Frappe lourde", "Berserker"],
+    lien: "https://got-kingsroad.com"
   }
 ];
 
@@ -48,20 +54,26 @@ function renderBuilds(filtre = 'all') {
 
   container.innerHTML = filtered.map(build => `
     <div class="build-card">
-      <span class="class-badge badge-${build.classe}">${build.classe}</span>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <span class="class-badge badge-${build.classe}">${build.classe}</span>
+        <span class="style-badge">${build.style}</span>
+      </div>
       <h3>${build.nom}</h3>
       <p>${build.description}</p>
-      <div class="build-stats">
-        ${Object.entries(build.stats).map(([k, v]) => `
-          <span class="stat-chip">${k}: ${v}</span>
-        `).join('')}
+      <div class="build-traits">
+        ${build.traits.map(t => `<span class="trait-chip">${t}</span>`).join('')}
       </div>
+      ${build.lien ? `
+        <a href="${build.lien}" target="_blank" class="gear-link">
+          Voir le gear sur got-kingsroad.com →
+        </a>
+      ` : ''}
     </div>
   `).join('');
 }
 
 // Filtres par classe
-const filterBtns = document.querySelectorAll('.filter-btn');
+const filterBtns = document.querySelectorAll('#page-builds .filter-btn');
 filterBtns.forEach(btn => {
   btn.addEventListener('click', () => {
     filterBtns.forEach(b => b.classList.remove('active'));
@@ -71,9 +83,7 @@ filterBtns.forEach(btn => {
 });
 
 // Bouton créer un build
-document.getElementById('btn-new-build').addEventListener('click', () => {
-  afficherFormulaireNouveauBuild();
-});
+document.getElementById('btn-new-build').addEventListener('click', afficherFormulaireNouveauBuild);
 
 function afficherFormulaireNouveauBuild() {
   const container = document.getElementById('builds-list');
@@ -82,7 +92,7 @@ function afficherFormulaireNouveauBuild() {
       <h3 style="color:var(--gold);margin-bottom:16px">Nouveau build</h3>
       <div class="form-group">
         <label>Nom du build</label>
-        <input type="text" id="new-nom" placeholder="Ex: Assassin PvP">
+        <input type="text" id="new-nom" placeholder="Ex: Assassin PvP Burst">
       </div>
       <div class="form-group">
         <label>Classe</label>
@@ -93,31 +103,30 @@ function afficherFormulaireNouveauBuild() {
         </select>
       </div>
       <div class="form-group">
+        <label>Style de jeu</label>
+        <select id="new-style">
+          <option value="PvE">PvE</option>
+          <option value="PvP">PvP</option>
+          <option value="Boss">Boss</option>
+          <option value="Farming">Farming</option>
+        </select>
+      </div>
+      <div class="form-group">
         <label>Description</label>
         <input type="text" id="new-desc" placeholder="Décris ton build en une phrase">
       </div>
-      <button onclick="sauvegarderBuild()" style="
-        background: var(--gold);
-        color: var(--darker);
-        border: none;
-        padding: 12px 24px;
-        border-radius: 4px;
-        cursor: pointer;
-        font-weight: 600;
-        font-size: 14px;
-        margin-top: 8px;
-      ">Sauvegarder</button>
-      <button onclick="renderBuilds()" style="
-        background: transparent;
-        color: var(--text-muted);
-        border: 1px solid var(--text-muted);
-        padding: 12px 24px;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 14px;
-        margin-top: 8px;
-        margin-left: 8px;
-      ">Annuler</button>
+      <div class="form-group">
+        <label>Traits principaux (séparés par des virgules)</label>
+        <input type="text" id="new-traits" placeholder="Ex: Lame acérée, Frappe fatale">
+      </div>
+      <div class="form-group">
+        <label>Lien Gear Planner (optionnel)</label>
+        <input type="text" id="new-lien" placeholder="https://got-kingsroad.com/...">
+      </div>
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <button onclick="sauvegarderBuild()" class="btn-primary">Sauvegarder</button>
+        <button onclick="renderBuilds()" class="btn-secondary">Annuler</button>
+      </div>
     </div>
   `;
 }
@@ -125,22 +134,14 @@ function afficherFormulaireNouveauBuild() {
 function sauvegarderBuild() {
   const nom = document.getElementById('new-nom').value.trim();
   const classe = document.getElementById('new-classe').value;
+  const style = document.getElementById('new-style').value;
   const desc = document.getElementById('new-desc').value.trim();
+  const traits = document.getElementById('new-traits').value.split(',').map(t => t.trim()).filter(t => t);
+  const lien = document.getElementById('new-lien').value.trim();
 
-  if (!nom) {
-    alert('Donne un nom à ton build !');
-    return;
-  }
+  if (!nom) { alert('Donne un nom à ton build !'); return; }
 
-  const nouveauBuild = {
-    id: Date.now(),
-    nom,
-    classe,
-    description: desc || 'Pas de description.',
-    stats: {}
-  };
-
-  builds.push(nouveauBuild);
+  builds.push({ id: Date.now(), nom, classe, style, description: desc || 'Pas de description.', traits, lien });
   localStorage.setItem('kingsroad-builds', JSON.stringify(builds));
   renderBuilds();
 }

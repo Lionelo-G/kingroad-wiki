@@ -14,7 +14,9 @@
     <h1>⚔️ Kingsroad Wiki</h1>
     <nav>
       <button class="nav-btn active" data-page="builds">Builds</button>
-      <button class="nav-btn" data-page="calculator">Calculateur</button>
+      <button class="nav-btn" data-page="guides">Guides</button>
+      <button class="nav-btn" data-page="tierlist">Tier List</button>
+      <button class="nav-btn" data-page="progression">Progression</button>
     </nav>
   </header>
 
@@ -22,7 +24,7 @@
 
     <!-- Page Builds -->
     <section id="page-builds" class="page active">
-      <h2>Builds de la communauté</h2>
+      <h2>Builds communautaires</h2>
       <div class="filter-bar">
         <button class="filter-btn active" data-class="all">Tous</button>
         <button class="filter-btn" data-class="assassin">Assassin</button>
@@ -33,16 +35,55 @@
       <button id="btn-new-build">+ Créer un build</button>
     </section>
 
-    <!-- Page Calculateur -->
-    <section id="page-calculator" class="page">
-      <h2>Calculateur de stats</h2>
-      <div id="calculator-app"></div>
+    <!-- Page Guides -->
+    <section id="page-guides" class="page">
+      <h2>Guides par classe</h2>
+      <div class="class-cards">
+        <div class="class-card assassin" onclick="ouvrirGuide('assassin')">
+          <div class="class-icon">🗡️</div>
+          <h3>Assassin</h3>
+          <p>Dégâts critiques, esquive, burst damage</p>
+          <span class="difficulty">Difficulté : ★★★</span>
+        </div>
+        <div class="class-card chevalier" onclick="ouvrirGuide('chevalier')">
+          <div class="class-icon">🛡️</div>
+          <h3>Chevalier</h3>
+          <p>Tank équilibré, idéal pour débuter</p>
+          <span class="difficulty">Difficulté : ★☆☆</span>
+        </div>
+        <div class="class-card mercenaire" onclick="ouvrirGuide('mercenaire')">
+          <div class="class-icon">⚔️</div>
+          <h3>Mercenaire</h3>
+          <p>Dégâts bruts, spécialiste des boss</p>
+          <span class="difficulty">Difficulté : ★★☆</span>
+        </div>
+      </div>
+      <div id="guide-detail" class="guide-detail" style="display:none"></div>
+    </section>
+
+    <!-- Page Tier List -->
+    <section id="page-tierlist" class="page">
+      <h2>Tier List des traits</h2>
+      <div class="filter-bar">
+        <button class="filter-btn active" data-mode="pve">PvE</button>
+        <button class="filter-btn" data-mode="pvp">PvP</button>
+        <button class="filter-btn" data-mode="boss">Boss</button>
+      </div>
+      <div id="tierlist-content"></div>
+    </section>
+
+    <!-- Page Progression -->
+    <section id="page-progression" class="page">
+      <h2>Guide de progression</h2>
+      <div id="progression-content"></div>
     </section>
 
   </main>
 
   <script src="js/app.js"></script>
-  <script src="js/calculator.js"></script>
+  <script src="js/guides.js"></script>
+  <script src="js/tierlist.js"></script>
+  <script src="js/progression.js"></script>
 
 </body>
 </html>
