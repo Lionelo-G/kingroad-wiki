@@ -2,8 +2,7 @@ const SUPABASE_URL = 'https://tffbirgikaqvkmzhvzdk.supabase.co';
 const SUPABASE_KEY = process.env.SUPABASE_KEY;
 
 // Client Supabase
-const { createClient } = supabase;
-const db = createClient(SUPABASE_URL, SUPABASE_KEY);
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // Navigation
 const navBtns = document.querySelectorAll('.nav-btn');
