@@ -38,7 +38,7 @@ async function chargerBuilds(filtre = 'all') {
   }
 
   container.innerHTML = data.map(build => {
-    const traits = build.traits ? build.traits.split(',').map(t => t.trim()) : [];
+    const competences = build.competences ? build.competences.split(',').map(t => t.trim()) : [];
     return `
       <div class="build-card">
         <div class="build-card-top">
@@ -47,8 +47,8 @@ async function chargerBuilds(filtre = 'all') {
         </div>
         <h3>${build.nom}</h3>
         <p>${build.description || ''}</p>
-        <div class="build-traits">
-          ${traits.map(t => `<span class="trait-chip">${t}</span>`).join('')}
+        <div class="build-competences">
+          ${competences.map(t => `<span class="competence-chip">${t}</span>`).join('')}
         </div>
         ${build.lien ? `<a href="${build.lien}" target="_blank" class="gear-link">Voir le gear sur got-kingsroad.com →</a>` : ''}
       </div>
@@ -100,8 +100,8 @@ function afficherFormulaireNouveauBuild() {
         <input type="text" id="new-desc" placeholder="Décris ton build en une phrase">
       </div>
       <div class="form-group">
-        <label>Traits principaux (séparés par des virgules)</label>
-        <input type="text" id="new-traits" placeholder="Ex: Lame acérée, Frappe fatale">
+        <label>competences principaux (séparés par des virgules)</label>
+        <input type="text" id="new-competences" placeholder="Ex: Lame acérée, Frappe fatale">
       </div>
       <div class="form-group">
         <label>Lien Gear Planner (optionnel)</label>
@@ -120,13 +120,13 @@ async function sauvegarderBuild() {
   const classe = document.getElementById('new-classe').value;
   const style = document.getElementById('new-style').value;
   const description = document.getElementById('new-desc').value.trim();
-  const traits = document.getElementById('new-traits').value.trim();
+  const competences = document.getElementById('new-competences').value.trim();
   const lien = document.getElementById('new-lien').value.trim();
 
   if (!nom) { alert('Donne un nom à ton build !'); return; }
 
   const { error } = await db.from('builds').insert([{
-    nom, classe, style, description, traits, lien
+    nom, classe, style, description, competences, lien
   }]);
 
   if (error) {

@@ -5,7 +5,7 @@ const progressionData = [
     items: [
       "Fais toutes les quêtes principales — elles donnent le meilleur équipement en early",
       "Complète les donjons normaux en solo avant de passer en difficile",
-      "Investis tes premiers points de traits dans la branche Attaque",
+      "Investis tes premiers points de competences dans la branche Attaque",
       "Rejoins une guilde dès que possible — les bonus de guilde sont importants",
       "Ne dépense pas tes ressources rares (cristaux, parchemins) trop tôt",
       "Objectif : débloquer les donjons d'élite"
@@ -17,7 +17,7 @@ const progressionData = [
     items: [
       "Priorise l'amélioration de ton équipement principal (arme et armure torse)",
       "Fais les donjons quotidiens sans exception — c'est la source de progression principale",
-      "Commence à spécialiser tes traits selon ton style de jeu (PvE ou PvP)",
+      "Commence à spécialiser tes competences selon ton style de jeu (PvE ou PvP)",
       "Participe aux événements de guilde pour obtenir des ressources exclusives",
       "Explore la carte pour débloquer les zones cachées et coffres secrets",
       "Objectif : atteindre le contenu de guilde avancé"
@@ -28,7 +28,7 @@ const progressionData = [
     etape: "Momentum 40 à 60",
     items: [
       "Focus sur les artefacts — ils font une différence massive en late game",
-      "Optimise ton build de traits pour le contenu que tu vises (boss, PvP, farming)",
+      "Optimise ton build de competences pour le contenu que tu vises (boss, PvP, farming)",
       "Fais les raids de guilde chaque semaine sans faute",
       "Utilise le Gear Planner de got-kingsroad.com pour simuler tes améliorations",
       "Participe aux classements PvP si tu joues Assassin ou build burst",

@@ -38,7 +38,7 @@ function renderTierlist(mode = 'pve') {
       </div>
     `).join('')}
     <p style="font-size:12px;color:var(--text-muted);margin-top:16px">
-      Pour simuler tes traits : <a href="https://got-kingsroad.com" target="_blank" style="color:var(--gold)">got-kingsroad.com →</a>
+      Pour simuler tes competences : <a href="https://got-kingsroad.com" target="_blank" style="color:var(--gold)">got-kingsroad.com →</a>
     </p>
   `;
 }

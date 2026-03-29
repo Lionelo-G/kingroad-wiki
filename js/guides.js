@@ -14,7 +14,7 @@ const guidesData = {
       {
         titre: "Early game (débutant)",
         contenu: `<ul>
-          <li>Priorise les traits qui augmentent ton <strong>Critical Rate</strong> en premier</li>
+          <li>Priorise les competences qui augmentent ton <strong>Critical Rate</strong> en premier</li>
           <li>Ne néglige pas l'Evasion — tu es fragile, esquiver est vital</li>
           <li>Fais les donjons normaux avant de passer en difficile</li>
           <li>Équipement : vise les pièces avec bonus Crit Rate / Crit DMG</li>
@@ -23,7 +23,7 @@ const guidesData = {
       {
         titre: "Mid game",
         contenu: `<ul>
-          <li>Commence à investir dans les traits de branche Attaque</li>
+          <li>Commence à investir dans les competences de branche Attaque</li>
           <li>Optimise ta rotation de compétences pour maximiser le burst</li>
           <li>Rejoins une guilde pour accéder aux contenus de groupe</li>
         </ul>`
@@ -57,7 +57,7 @@ const guidesData = {
       {
         titre: "Early game (débutant)",
         contenu: `<ul>
-          <li>Investis dans les traits de branche Défense pour survivre facilement</li>
+          <li>Investis dans les competences de branche Défense pour survivre facilement</li>
           <li>Priorise les pièces d'équipement avec bonus HP et Defense</li>
           <li>Idéal pour apprendre les mécaniques du jeu sans mourir constamment</li>
         </ul>`
@@ -65,7 +65,7 @@ const guidesData = {
       {
         titre: "Mid game",
         contenu: `<ul>
-          <li>Commence à équilibrer Attaque et Défense dans tes traits</li>
+          <li>Commence à équilibrer Attaque et Défense dans tes competences</li>
           <li>Le Chevalier est très demandé en groupe pour les donjons difficiles</li>
           <li>Travaille ta Parry — c'est la mécanique clé de la classe</li>
         </ul>`
@@ -107,7 +107,7 @@ const guidesData = {
       {
         titre: "Mid game",
         contenu: `<ul>
-          <li>Investis dans les traits qui boostent le Rage Gain</li>
+          <li>Investis dans les competences qui boostent le Rage Gain</li>
           <li>Le Mercenaire est redoutable en donjon boss — propose-toi en groupe</li>
           <li>Commence à travailler ton positionnement pour éviter les dégâts</li>
         </ul>`

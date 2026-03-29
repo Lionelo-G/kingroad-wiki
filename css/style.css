@@ -267,14 +267,14 @@ h2 {
   line-height: 1.5;
 }
 
-.build-traits {
+.build-competences {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
   margin-bottom: 8px;
 }
 
-.trait-chip {
+.competence-chip {
   background: #1a1500;
   border: 0.5px solid #2a2010;
   border-radius: 3px;
