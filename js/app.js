@@ -1,5 +1,5 @@
 const SUPABASE_URL = 'https://tffbirgikaqvkmzhvzdk.supabase.co';
-const SUPABASE_KEY = process.env.SUPABASE_KEY;
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRmZmJpcmdpa2Fxdmttemh2emRrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3ODU3OTksImV4cCI6MjA5MDM2MTc5OX0.4xhcg8giKATCoOim-osJk5WeHmiJ_skVqVtGwUiWXcg';
 
 // Client Supabase
 const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
