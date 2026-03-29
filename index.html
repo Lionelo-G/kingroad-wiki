@@ -11,7 +11,13 @@
 <body>
 
   <header>
-    <h1>⚔️ Kingsroad Wiki</h1>
+    <div class="header-ornament">
+      <div class="ornament-line"></div>
+      <div class="ornament-diamond"></div>
+      <div class="ornament-line right"></div>
+    </div>
+    <h1>KINGSROAD</h1>
+    <p class="header-subtitle">Wiki & Compendium</p>
     <nav>
       <button class="nav-btn active" data-page="builds">Builds</button>
       <button class="nav-btn" data-page="guides">Guides</button>
@@ -24,7 +30,11 @@
 
     <!-- Page Builds -->
     <section id="page-builds" class="page active">
-      <h2>Builds communautaires</h2>
+      <div class="section-header">
+        <div class="section-header-line"></div>
+        <h2>BUILDS COMMUNAUTAIRES</h2>
+        <div class="section-header-line"></div>
+      </div>
       <div class="filter-bar">
         <button class="filter-btn active" data-class="all">Tous</button>
         <button class="filter-btn" data-class="assassin">Assassin</button>
@@ -37,7 +47,11 @@
 
     <!-- Page Guides -->
     <section id="page-guides" class="page">
-      <h2>Guides par classe</h2>
+      <div class="section-header">
+        <div class="section-header-line"></div>
+        <h2>BUILDS COMMUNAUTAIRES</h2>
+        <div class="section-header-line"></div>
+      </div>
       <div class="class-cards">
         <div class="class-card assassin" onclick="ouvrirGuide('assassin')">
           <div class="class-icon">🗡️</div>
@@ -63,7 +77,11 @@
 
     <!-- Page Tier List -->
     <section id="page-tierlist" class="page">
-      <h2>Tier List des traits</h2>
+      <div class="section-header">
+        <div class="section-header-line"></div>
+        <h2>BUILDS COMMUNAUTAIRES</h2>
+        <div class="section-header-line"></div>
+      </div>
       <div class="filter-bar">
         <button class="filter-btn active" data-mode="pve">PvE</button>
         <button class="filter-btn" data-mode="pvp">PvP</button>
@@ -74,7 +92,11 @@
 
     <!-- Page Progression -->
     <section id="page-progression" class="page">
-      <h2>Guide de progression</h2>
+      <div class="section-header">
+        <div class="section-header-line"></div>
+        <h2>BUILDS COMMUNAUTAIRES</h2>
+        <div class="section-header-line"></div>
+      </div>
       <div id="progression-content"></div>
     </section>
 

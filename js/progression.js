@@ -56,3 +56,9 @@ function renderProgression() {
       <p style="font-size:12px;color:var(--gold);margin-bottom:10px">${step.etape}</p>
       <ul>
         ${step.items.map(item => `<li>${item}</li>`).join('')}
+        </ul>
+    </div>
+  `).join('');
+}
+
+renderProgression();
